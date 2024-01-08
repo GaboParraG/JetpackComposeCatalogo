@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,10 +13,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +42,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyExample()
+                    MyState()
                 }
             }
         }
@@ -41,24 +50,53 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun MyState() {
+    //rememberSaveable : Permite mantener la fata cuando la actividad se destruye y se vuelve a crear
+    //var counter = rememberSaveable { mutableStateOf(0) }
+    //by nos permite ahorranos el .value
+    var counter by rememberSaveable { mutableStateOf(0) }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { counter += 1 }) {
+            Text(text = "Pulsar")
+
+        }
+        Text(text = "Se a pulsado $counter veces")
+
+    }
+
+}
+
+@Composable
 fun MyExample() {
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Color.Gray)){
-        Column(modifier= Modifier.fillMaxSize()) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-                .background(color = Color.Blue))
-            Spacer(modifier = Modifier
-                .width(0.dp)
-                .height(5.dp)
-                .background(color = Color.White))
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-                .background(color = Color.Red)){
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Gray)
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .background(color = Color.Blue)
+            )
+            Spacer(
+                modifier = Modifier
+                    .width(0.dp)
+                    .height(5.dp)
+                    .background(color = Color.White)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .background(color = Color.Red)
+            ) {
                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                     val (boxWhite, boxGray, boxMagenta, boxBlack, boxYellow) = createRefs()
 
@@ -101,21 +139,35 @@ fun MyExample() {
                         })
                 }
             }
-            Spacer(modifier = Modifier
-                .width(0.dp)
-                .height(5.dp)
-                .background(color = Color.White))
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-                .background(color = Color.Magenta)){
+            Spacer(
+                modifier = Modifier
+                    .width(0.dp)
+                    .height(5.dp)
+                    .background(color = Color.White)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .background(color = Color.Magenta)
+            ) {
                 Row {
-                    Box(modifier = Modifier.size(125.dp).background(Color.Yellow))
-                    Spacer(modifier = Modifier
-                        .width(5.dp)
-                        .height(0.dp)
-                        .background(color = Color.Blue))
-                    Box(modifier = Modifier.size(125.dp).background(Color.Red))
+                    Box(
+                        modifier = Modifier
+                            .size(125.dp)
+                            .background(Color.Yellow)
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .width(5.dp)
+                            .height(0.dp)
+                            .background(color = Color.Blue)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(125.dp)
+                            .background(Color.Red)
+                    )
                 }
             }
         }
@@ -127,6 +179,6 @@ fun MyExample() {
 @Composable
 fun GreetingPreview() {
     JetpackComposeCatalogoTheme {
-        MyExample()
+        MyState()
     }
 }
