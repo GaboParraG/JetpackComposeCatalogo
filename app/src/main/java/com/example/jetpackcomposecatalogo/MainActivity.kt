@@ -11,12 +11,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,8 +32,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.jetpackcomposecatalogo.ui.theme.JetpackComposeCatalogoTheme
 
@@ -42,11 +50,49 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyState()
+                    MyComponents()
                 }
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyComponents() {
+
+    var myText by rememberSaveable {
+        mutableStateOf("")
+    }
+   /* Text(
+        text = "Hola Gambito",
+        color = Color.Red,
+        fontSize = 30.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontFamily = FontFamily.Cursive
+    )*/
+
+   /* TextField(
+        value = myText,
+        onValueChange = {
+            myText = if (it.contains("a")) {
+                it.replace("a", "")
+            } else {
+                it
+            }
+        },
+        label = { Text(text = "Di algo Gambito") })*/
+
+    OutlinedTextField(
+        value = myText,
+        onValueChange = { myText = it },
+        modifier = Modifier.padding(30.dp),
+        label = { Text(text = "Di algo Gambito") },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.Magenta,
+            unfocusedBorderColor = Color.Blue
+        ))
+
 }
 
 @Composable
@@ -179,6 +225,6 @@ fun MyExample() {
 @Composable
 fun GreetingPreview() {
     JetpackComposeCatalogoTheme {
-        MyState()
+        MyComponents()
     }
 }
